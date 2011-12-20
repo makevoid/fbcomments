@@ -1,0 +1,124 @@
+@import "libs"
+
+
+@import compass/utilities/general/clearfix
+@import compass/reset/utilities
+
+=custom-reset // fork of global-reset
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed, 
+  figure, figcaption, footer, header, hgroup, 
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video
+    +reset-box-model
+    +reset-font
+  body
+    +reset-body
+  ol, ul
+    +reset-list-style
+  table
+    //   +reset-table
+    border-spacing: 0
+  caption, th, td
+    +reset-table-cell
+  q, blockquote
+    +reset-quotation
+  a img
+    +reset-image-anchor-border
+  +reset-html5
+
+  // de-reset - useful defaults
+  h1, h2, h3, h4, h5, h6  
+    font-weight: bold
+
++custom-reset
+
+@import compass/utilities/tables
+@import compass/utilities/tables/scaffolding
+@import compass/css3/border-radius
+@import compass/typography/links/link-colors
+// @import compass/typography/vertical_rhythm
+@import compass/css3
+
+$default-radius: 12px
+
+
+$table-color: #EBEFF0
+
+
+
+a 
+  text-decoration: none
+  
+.clear
+  clear: both
+
+  
+// style
+
+$bg: #111
+$bg_cont: #FFF
+$txt: #222
+$main: #999
+$alt: #666
+$links: #EEE
+
+
+html
+  height: 100%
+
+body
+  background: $bg
+  font-family: Helvetica, sans-serif, Arial, Verdana
+  color: $txt
+  font-size: 120%
+  +background-image(linear-gradient(#DFDEDA, #92949C))
+  height: 100%
+  min-height: 100%
+
+a
+  color: $links
+a:hover
+  color: $links + #111
+
+
+// input[type='submit'], input.submit, a.button
+
+
+.spinner
+  margin: 0 auto
+
+#container
+  margin: 30px
+  
+$inner_width: 93%
+
+h1
+  margin-bottom: 20px
+  font-size: 1.5em
+  span
+    display: block
+    font-size: 0.7em
+    
+h2
+  margin-bottom: 10px
+  font-size: 1.3em
+
+// colors
+
+$gold: #FFE100
+$brown: #BB8E00
+$dark_grey: #666
+
+
+@media (max-width:480px)
+
+@media (orientation: portrait)
