@@ -8,5 +8,5 @@ DataMapper.auto_migrate!
 
 blog = Blog.create name: "test"
 post = blog.posts.create name: "post1", url: "http://localhost:3001/page1"
-comment = post.comments.create text: "cooommment"
-comment = post.comments.create text: "cooommment2"
+comment = post.comments.create text: "cooommment", user_id: 1218562195
+comment = post.comments.create text: "cooommment2", user_id: 1218562195

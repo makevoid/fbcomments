@@ -20,8 +20,9 @@ DataMapper.setup :default, "mysql://#{user}localhost/fbcomments_#{env}"
 
 # DataMapper::Model.raise_on_save_failure = true 
 
-
 Dir.glob("#{path}/models/*.rb").each do |model|
   require model
 end
+DataMapper.finalize
+
 require 'voidtools'

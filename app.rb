@@ -28,20 +28,40 @@ class App < Sinatra::Base
   def not_found(object=nil)
     halt 404, "404 - Page Not Found"
   end
+  
+  def set_access_ctrl_headers
+    headers "Access-Control-Allow-Origin" => "*"
+    headers "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE"
+  end
+  
+  before do
+    set_access_ctrl_headers
+  end
 
-  # encodeURIComponent("http://google.com")
-  # "http%3A%2F%2Fgoogle.com"
-  # http://localhost:3000/comments/http%3A%2F%2Fgoogle.com
-  # becomes: 
-  # http://localhost:3000/comments/http://google.com
+  # encodeURIComponent("http://localhost:3001/page1)
   # http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpage1
+  #
+  # curl http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpage1 
   get "/comments/*" do |url|
     content_type :json
     url = CGI.unescape url
     if post = Post.first( url: url )
-      post.comments.map{ |c| c.attributes }.to_json
+      post.comments.map{ |c| c.public_attributes }.to_json
     else
       halt 404, { error: "post not found" }.to_json
+    end
+  end
+  
+  
+  # curl http://localhost:3000/blog/test/comments
+  
+  get "/blog/:name/comments" do |url|
+    content_type :json
+    blog = Blog.first name: params[:name]
+    if blog
+      Comment.all(post: blog.posts).map{ |c| c.public_attributes }.to_json
+    else
+      [].to_json
     end
   end
 
@@ -51,24 +71,31 @@ class App < Sinatra::Base
   #   user_id: user_id
   # }
   
-  # curl -D "text=comment_text&user_id=12345" http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpage1
+  # curl -d "text=comment_text&user_id=12345" http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpage1
 
   post "/comments/*" do |url|
     content_type :json
     url = CGI.unescape url
-    puts params.inspect
-    if post = Post.first( url: url )
-      comment = Comment.create({
+    puts params.inspect    
+    post = Post.first( url: url )
+    unless post
+      blog = Blog.first( name: params[:blog] )
+      blog = Blog.create( name: params[:blog] ) unless blog
+      post = blog.posts.create( url: url ) 
+    end
+    
+    if post
+      comment = post.comments.create(
         text: params[:text],
         user_id: params[:user_id],
-      })
+      )
       if comment
         { success: "comment inserted" }.to_json
       else
         halt 500, { error: "error creating the comment" }.to_json
       end
     else
-      halt 404, { error: "post not found" }.to_json
+      halt 500, { error: "cannot create post" }.to_json
     end
   end
   

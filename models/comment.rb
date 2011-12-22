@@ -2,6 +2,7 @@ class Comment
   include DataMapper::Resource
   
   property :id, Serial
+  property :fb_id, Integer
   property :text, Text
   property :created_at, DateTime
   property :user_id, Integer
@@ -23,4 +24,14 @@ class Comment
   end
   
   belongs_to :post  
+  
+  def public_attributes
+    attributes.merge( 
+      post: { 
+        name: post.name,
+        url: post.name,
+        comments_count: post.comments_count 
+      }
+    )
+  end
 end
