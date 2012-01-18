@@ -17,10 +17,12 @@ class FBComm
     @blog = blog
   end
   
+  def base_url  
+    URL % "http://d.makevoid.com:3000/page1,http://d.makevoid.com:3000/page2"
+  end
+  
   def fetch
-    urls = "http://d.makevoid.com:3000/page1,http://d.makevoid.com:3000/page2"
-    resp = get(URL % urls)
-    datas = JSON.parse(resp.body)
+    datas = get_full 
     datas.map do |post, comments|
       # puts post
       comments = comments["data"]
@@ -29,9 +31,7 @@ class FBComm
         comment[:created_time] = Time.parse comment[:created_time]
         insert_comment_if_new comment, post
       end
-    end
-    # {"http://d.makevoid.com:3000/page1"=>{"data"=>[{"id"=>"10150552265528998_23241159", "from"=>{"name"=>"Francesco Canessa", "id"=>"1218562195"}, "message"=>"finally", "created_time"=>"2011-11-22T20:56:59+0000"}, {"id"=>"10150552265528998_23689606", "from"=>{"name"=>"Francesco Canessa", 
-    
+    end    
   end
   
   private
@@ -53,6 +53,11 @@ class FBComm
     end
   end
   
+  def get_full
+    resp = get(base_url)
+    JSON.parse resp.body
+  end
+  
   def get(url)
     uri = URI.parse url
     http = Net::HTTP.new(uri.host, uri.port)
@@ -64,6 +69,16 @@ class FBComm
 end
 
 
-Blog.all.each do |blog|
-  FBComm.new(blog).fetch
+class Sync
+  
+  def self.start
+    Blog.all.each do |blog|
+      FBComm.new(blog).fetch
+    end
+  end
+  
+end
+
+if ARGV[0] && ARGV[0].strip == "start"
+  Sync.start
 end

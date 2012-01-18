@@ -1,25 +1,46 @@
 path = File.expand_path "../../", __FILE__
-require "#{path}/config/env"
 
-require 'webrat'
-require 'rspec'
-#require 'capybara/rspec'
-require 'rack/test'
+require 'bundler/setup'
+Bundler.require :default, :test
+require 'capybara/rspec'
+Capybara.javascript_driver = :webkit
+# Capybara.default_wait_time = 2
+# Capybara.app_host = 'http://www.google.com'
+# Capybara.run_server = false
+
+def app
+  FBComments
+end
+
+require "#{path}/fbcomments"
+Capybara.app = app
 
 
-module MyHelpers
-  def app
-    App
+require "rack/test"
+
+RSpec.configure do |conf|
+  conf.include Rack::Test::Methods
+end
+
+
+DataMapper.auto_migrate!
+
+
+def should_render
+  page.status_code.should eq(200)
+end
+
+def json_response
+  obj = JSON.parse(last_response.body)
+  if obj.is_a?(Hash)
+    obj.symbolize_keys
+  else
+    obj
+  end  
+end
+
+def clear_db
+  app::MODELS.each do |model|
+    DataMapper.repository(:default).adapter.execute "TRUNCATE TABLE #{model.pluralize}"
   end
-end
-
-Webrat.configure do |config|
-  config.mode = :rack
-end
-
-RSpec.configure do |config|
-  config.include Rack::Test::Methods
-  config.include MyHelpers
-  config.include Webrat::Methods
-  config.include Webrat::Matchers
 end

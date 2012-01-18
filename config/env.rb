@@ -1,7 +1,13 @@
 path = File.expand_path "../../", __FILE__
 
-require 'bundler/setup'
-Bundler.require :models
+unless defined?(Rspec)
+  require 'bundler/setup'
+  Bundler.require :models
+else
+  require "dm-core"
+  require "dm-mysql-adapter"
+  require "dm-migrations"
+end
 
 # sqlite
 #

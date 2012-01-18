@@ -3,9 +3,9 @@ source :rubygems
 gem 'haml'
 gem "sass"
 gem 'sinatra'
-gem "sinatra-content-for"
+# gem "sinatra-content-for"
 gem "sinatra-reloader", :require => "sinatra/reloader"
-gem 'rack-flash'
+# gem 'rack-flash'
 
 group :models do
   gem "json"
@@ -30,7 +30,5 @@ gem 'guard-compass'
 
 group :test do
   gem "rspec"
-  gem "webrat"
-  gem "autotest-growl"
   gem "capybara"
 end
