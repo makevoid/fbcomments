@@ -24,5 +24,9 @@ describe "Comments" do
     comment[:id].should == 1
     comment[:text].should == "comment1"
   end
-
+  
+  after :all do
+    clear_db
+  end
+  
 end

@@ -25,4 +25,8 @@ feature "FBComments" do
   end
 
   
+  after :all do
+    clear_db
+  end
+  
 end

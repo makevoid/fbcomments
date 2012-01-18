@@ -37,4 +37,9 @@ describe "Sync" do
     Post.all.count.should == 2
     Comment.all.count.should == 2
   end
+  
+  
+  after :all do
+    clear_db
+  end
 end
