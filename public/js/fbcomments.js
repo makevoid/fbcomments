@@ -2,6 +2,7 @@
   var FbComments;
 
   FbComments = (function() {
+    var helpers;
 
     function FbComments(blog) {
       this.blog = blog;
@@ -42,8 +43,15 @@
       if (this.callback) return this.callback();
     };
 
+    helpers = {};
+
+    helpers.format_date = function(date) {
+      date = Date.parse(date.substring(0, 19));
+      return "" + (date.getDate()) + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear());
+    };
+
     FbComments.prototype.comment_html = function(c) {
-      return "    <div class='fbc_comment'>      <fb:profile-pic uid='" + c.user_id + "' linked='true'></fb:profile-pic>      <div class='fbc_from'>          <fb:name uid='" + c.user_id + "' linked='true'></fb:name> commented on <a href='" + c.post.url + "'>" + c.post.name + "</a> (sul blog generale:) in TITOLO_BLOG      </div>      <div class='fbc_message'>" + c.text + "</div>      </div>    </div>";
+      return "    <div class='fbc_comment'>      <fb:profile-pic uid='" + c.user_id + "' linked='true'></fb:profile-pic>      <div class='fbc_from'>          <fb:name uid='" + c.user_id + "' linked='true'></fb:name> commented on <a href='" + c.post.url + "'>" + c.post.name + "</a> (sul blog generale:) " + c.post.blog.label + " <span class='fbc_date'>" + (helpers.format_date(c.created_at)) + "</span>      </div>      <div class='fbc_message'>" + c.text + "</div>      </div>    </div>";
     };
 
     FbComments.prototype.comment_html_fb = function(comment) {
