@@ -1,4 +1,6 @@
-path = File.expand_path "../../", __FILE__
+PATH = File.expand_path "../../", __FILE__
+
+ENV["RACK_ENV"] = "test"
 
 require 'bundler/setup'
 Bundler.require :default, :test
@@ -12,7 +14,7 @@ def app
   FBComments
 end
 
-require "#{path}/fbcomments"
+require "#{PATH}/fbcomments"
 Capybara.app = app
 
 
@@ -39,8 +41,15 @@ def json_response
   end  
 end
 
+class String
+  def pluralize
+    "#{self}s"
+  end
+end
+
 def clear_db
-  app::MODELS.each do |model|
+  models = Dir.glob("#{PATH}/models/*").map{|m| File.basename m, ".rb" }
+  models.each do |model|
     DataMapper.repository(:default).adapter.execute "TRUNCATE TABLE #{model.pluralize}"
   end
 end

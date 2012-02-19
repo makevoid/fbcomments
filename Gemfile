@@ -18,6 +18,9 @@ group :models do
   # gem 'dm-types'
   gem 'dm-migrations'
   gem 'dm-transactions'
+  
+  gem 'sequel'
+  gem "mysql"
 end
 
 gem "json"
@@ -31,4 +34,5 @@ gem 'guard-compass'
 group :test do
   gem "rspec"
   gem "capybara"
+  gem "capybara-webkit"
 end

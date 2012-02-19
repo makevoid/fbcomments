@@ -6,7 +6,22 @@ DataMapper.auto_migrate!
 
 # seed your db here
 
-blog = Blog.create name: "localhost:3001"
-post = blog.posts.create name: "post1", url: "http://localhost:3001/page1"
-comment = post.comments.create text: "cooommment", user_id: 1218562195
-comment = post.comments.create text: "cooommment2", user_id: 1218562195
+BLOGS = [
+  {
+    name: "wp",
+    host: "127.0.0.1", 
+    user: "root",
+    password: "",
+    database: "wp_blog",
+  }
+]
+
+
+BLOGS.each do |blog|
+
+  blog = Blog.create blog
+  post = blog.posts.create name: "post1", url: "http://#{blog[:name]}/page1"
+  comment = post.comments.create text: "commment", user_id: 1218562195
+  comment = post.comments.create text: "commment 2", user_id: 1218562195
+
+end

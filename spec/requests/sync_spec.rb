@@ -1,7 +1,9 @@
-ENV["RACK_ENV"] = "test"
-PATH = File.expand_path "../../../", __FILE__
+require "spec_helper"
+# ENV["RACK_ENV"] = "test"
+# PATH = File.expand_path "../../../", __FILE__
 require "#{PATH}/lib/sync"
-DataMapper.auto_migrate!
+# DataMapper.auto_migrate!
+
 
 # fixtures
 
@@ -26,7 +28,15 @@ end
 
 describe "Sync" do
   before :all do
-    @blog = Blog.create name: "localhost:3001"
+    blog = {
+      name: "wp",
+      host: "127.0.0.1", 
+      user: "root",
+      password: "",
+      database: "wp_blog",
+    }
+    
+    @blog = Blog.create blog
     # @post = @blog.posts.create name: "post1", url: "http://localhost:3001/page1"
     # @post2 = @blog.posts.create name: "post2", url: "http://localhost:3001/page2"
   end
@@ -40,6 +50,6 @@ describe "Sync" do
   
   
   after :all do
-    clear_db
+    clear_db if defined?(clear_db)
   end
 end

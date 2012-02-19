@@ -4,11 +4,15 @@ PATH = path
 require "#{PATH}/config/env"
 require 'net/https'
 
+
+
 class Hash
 	def symbolize_keys
 		replace(inject({}) { |h,(k,v)| h[k.to_sym] = v; h })
 	end
 end
+
+require_relative 'wp_posts'
 
 class FBComm
   URL = "https://graph.facebook.com/comments/?ids=%s"
@@ -72,8 +76,20 @@ end
 class Sync
   
   def self.start
+    create_posts
+    
     Blog.all.each do |blog|
       FBComm.new(blog).fetch
+    end
+  end
+  
+  def self.create_posts
+    wpp = WPPosts.new
+    posts = wpp.fetch
+    
+    posts.each do |post|
+      exists = Post.first url: post[:guid]
+      Post.create( id_wp: post[:id] ) unless exists
     end
   end
   
