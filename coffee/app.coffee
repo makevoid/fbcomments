@@ -2,8 +2,9 @@ g = window
 
 # config:
 g.config = {}
-configfbcomments_host = location.host
-configfbcomments_host = "http://#{fbcomments_host}"
+config.fbcomments_host = location.host
+config.fbcomments_host = "web2srv3"
+config.fbcomments_host = "http://#{config.fbcomments_host}"
 
 blog_name = "wp"
 # 
@@ -38,11 +39,10 @@ $ ->
     js.async = true
     js.src = "//connect.facebook.net/en_US/all.js"
     d.getElementsByTagName("head")[0].appendChild js
-  ) document
-  
+  ) document  
   
   load_fbcomments = (callback) ->
-    $.get "#{fbcomments_host}/js/fbcomments.js", (data) =>
+    $.get "#{config.fbcomments_host}/js/fbcomments.js", (data) =>
       eval data
       callback()
 
@@ -50,8 +50,8 @@ $ ->
   load_fbcomments ->
     fbcomm = new FbComments blog_name
     comments = fbcomm.latest  ->
-      console.log "latest done"
-      console.log fbcomm
+      # console.log "latest done"
+      # console.log fbcomm
     # fb_init()    
   # fb_init()
   # fbcomm.fetch_from_fb()

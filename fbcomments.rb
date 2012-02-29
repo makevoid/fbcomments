@@ -30,7 +30,21 @@ class FBComments < Sinatra::Base
   end
 
   def set_access_ctrl_headers
-    headers "Access-Control-Allow-Origin" => "*"
+    referer = if request.referer
+      "http://#{URI(request.referer).hostname}"
+    else
+      "http://#{ROOT_URL}"
+    end
+
+    # referer = request.referer =~ /shout/ ? "http://radioshout.mkvd.net" : referer
+
+    origin_hosts = case ENV["RACK_ENV"]
+      when "development"  then "http://localhost:3001"
+      when "test"         then "127.0.0.1 www.example.com"
+      when "production"   then referer
+    end
+    # referer = request.referer.sub /\/$/, '' if referer
+    headers "Access-Control-Allow-Origin" =>  origin_hosts
     headers "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE, OPTIONS"
     headers "Access-Control-Allow-Credentials" => "true"
   end

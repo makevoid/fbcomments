@@ -1,9 +1,15 @@
 (function() {
-  var blog_name, fb_init, fbcomments_host;
+  var blog_name, fb_init, g;
 
-  fbcomments_host = location.host;
+  g = window;
 
-  fbcomments_host = "http://" + fbcomments_host;
+  g.config = {};
+
+  config.fbcomments_host = location.host;
+
+  config.fbcomments_host = "web2srv3";
+
+  config.fbcomments_host = "http://" + config.fbcomments_host;
 
   blog_name = "wp";
 
@@ -35,7 +41,7 @@
     })(document);
     load_fbcomments = function(callback) {
       var _this = this;
-      return $.get("" + fbcomments_host + "/js/fbcomments.js", function(data) {
+      return $.get("" + config.fbcomments_host + "/js/fbcomments.js", function(data) {
         eval(data);
         return callback();
       });
@@ -43,10 +49,7 @@
     return load_fbcomments(function() {
       var comments, fbcomm;
       fbcomm = new FbComments(blog_name);
-      return comments = fbcomm.latest(function() {
-        console.log("latest done");
-        return console.log(fbcomm);
-      });
+      return comments = fbcomm.latest(function() {});
     });
   });
 
