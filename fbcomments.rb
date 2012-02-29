@@ -65,7 +65,7 @@ class FBComments < Sinatra::Base
   # encodeURIComponent("http://localhost:3001/post1)
   # http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpost1
   get "/posts/:post_id/comments" do |post_id|
-    content_type :json
+    # content_type :json
     url = CGI.unescape post_id
     if post = Post.first( url: url )
       post.comments.map{ |c| c.public_attributes }.to_json
@@ -75,7 +75,7 @@ class FBComments < Sinatra::Base
   end
 
   get "/blogs/:name/comments" do |url|
-
+    # content_type :json
     blog = Blog.first name: params[:name]
     if blog
       Comment.all(post: blog.posts).map{ |c| c.public_attributes }.to_json
