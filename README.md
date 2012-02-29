@@ -8,7 +8,11 @@
 
     1 * * * * RACK_ENV=production /usr/bin/ruby /www/fbcomments/current/lib/sync.rb
 
+### Crontab
 
+as www-data:
+
+    cd /www/fbcomments/current/; RACK_ENV=production bundle exec ruby lib/sync.rb start
 
 ### Code to insert:
 

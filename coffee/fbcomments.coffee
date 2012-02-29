@@ -34,7 +34,7 @@ class FbComments
   helpers = {}
   helpers.format_date = (date) ->
     date = Date.parse date.substring(0, 19)
-    "#{date.getDate()}/#{date.getMonth()+1}/#{date.getFullYear()}"
+    "#{date.getDate()}/#{date.getMonth()+1}/#{date.getFullYear()}" if date
 
   # views:
   
