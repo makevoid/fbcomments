@@ -55,6 +55,12 @@ class FBComments < Sinatra::Base
     set_access_ctrl_headers
   end
 
+
+  get "/fbcomments.js" do
+    File.read "#{APP_PATH}/public/js/fbcomments.js"
+  end
+
+
   # encodeURIComponent("http://localhost:3001/post1)
   # http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpost1
   get "/posts/:post_id/comments" do |post_id|

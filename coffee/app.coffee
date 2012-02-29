@@ -42,7 +42,7 @@ $ ->
   ) document  
   
   load_fbcomments = (callback) ->
-    $.get "#{config.fbcomments_host}/js/fbcomments.js", (data) =>
+    $.get "#{config.fbcomments_host}/fbcomments.js", (data) =>
       eval data
       callback()
 

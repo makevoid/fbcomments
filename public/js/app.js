@@ -41,7 +41,7 @@
     })(document);
     load_fbcomments = function(callback) {
       var _this = this;
-      return $.get("" + config.fbcomments_host + "/js/fbcomments.js", function(data) {
+      return $.get("" + config.fbcomments_host + "/fbcomments.js", function(data) {
         eval(data);
         return callback();
       });
