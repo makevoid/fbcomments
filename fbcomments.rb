@@ -46,7 +46,7 @@ class FBComments < Sinatra::Base
       when "production"   then referer
     end
     # origin_hosts = request.referer.sub /\/$/, '' if referer
-    origin_hosts = "http://globalgovernancenetwork.eui.eu/"
+    origin_hosts = "http://globalgovernancenetwork.eui.eu"
     headers "Access-Control-Allow-Origin" =>  origin_hosts
     headers "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE, OPTIONS"
     headers "Access-Control-Allow-Credentials" => "true"
