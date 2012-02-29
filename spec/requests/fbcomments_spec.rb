@@ -1,5 +1,16 @@
 require "spec_helper"
 
+BLOGS = [
+  {
+    name: "wp",
+    label: "WordpressBlog",
+    host: "127.0.0.1",
+    user: "root",
+    password: "",
+    database: "wp_blog",
+  }
+]
+
 feature "FBComments", js: true do
 
   context "basic" do
@@ -19,9 +30,11 @@ feature "FBComments", js: true do
   context "with comments" do
 
     before :all do
-      @blog = Blog.create name: "localhost:3001"
-      @post = @blog.posts.create name: "post1", url: "http://localhost:3001/post1"
-      @comment = @post.comments.create text: "comment1"
+      @blog = BLOGS.first
+      blog = Blog.create @blog
+      @post = blog.posts.create name: "post1", url: "http://#{@blog[:name]}/page1"
+      @time = Time.now
+      @comment = @post.comments.create text: "comment1", user_id: 1218562195, created_at: @time
     end
 
     describe "root page" do
@@ -34,6 +47,10 @@ feature "FBComments", js: true do
         page.find(".fb_comments").should have_content("comment1")
       end
 
+      it "displays all comments field" do
+        page.find(".fb_comments").should have_content(@blog[:label])
+        page.find(".fb_comments").should have_content("#{@time.day}/#{@time.month}/#{@time.year}")
+      end
     end
 
   end

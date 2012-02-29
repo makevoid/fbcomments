@@ -41,21 +41,15 @@ class FBComments < Sinatra::Base
 
   # encodeURIComponent("http://localhost:3001/post1)
   # http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpost1
-  #
-  # curl http://localhost:3000/posts/http%3A%2F%2Flocalhost%3A3001%2Fpost1/comments
   get "/posts/:post_id/comments" do |post_id|
     content_type :json
     url = CGI.unescape post_id
-    p url
     if post = Post.first( url: url )
       post.comments.map{ |c| c.public_attributes }.to_json
     else
       halt 404, { error: "post not found" }.to_json
     end
   end
-
-
-  # curl http://localhost:3000/blogs/test/comments
 
   get "/blogs/:name/comments" do |url|
     content_type :json
@@ -67,7 +61,7 @@ class FBComments < Sinatra::Base
     end
   end
 
-  # NOTE: very cool approach but this is not the right scenario for it
+  # NOTE: cool approach but this is not the right scenario for it
 
   # # url = encodeURIComponent(url)
   # # comment = {

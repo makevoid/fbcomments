@@ -1,7 +1,9 @@
-# config:
+g = window
 
-fbcomments_host = location.host
-fbcomments_host = "http://#{fbcomments_host}"
+# config:
+g.config = {}
+configfbcomments_host = location.host
+configfbcomments_host = "http://#{fbcomments_host}"
 
 blog_name = "wp"
 # 

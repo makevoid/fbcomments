@@ -1,13 +1,13 @@
-set :application, "#{raise "Set up your application name in config/deploy.rb"}"
+set :application, "fbcomments"
 
-set :domain,      "makevoid.com"
+set :domain,      "web2srv3"
 
 # git
 
 # #set :repository,  "svn://#{domain}/svn/#{application}"
 # #default_run_options[:pty] = true  # Must be set for the password prompt from git to work
-# set :repository, "git://github.com/makevoid/#{application}.git"  # public
-set :repository, "ssh+git://git@makevoid.com/git/#{application}"  # private @makevoid.com
+set :repository, "git://github.com/makevoid/#{application}.git"  # public
+# set :repository, "ssh+git://git@makevoid.com/git/#{application}"  # private @makevoid.com
 
 set :scm, "git"
 set :branch, "master"
@@ -45,17 +45,17 @@ after :deploy, "deploy:cleanup"
 #after :deploy, "db:seeds"
 
 namespace :deploy do
-  
+
   desc "Restart Application"
   task :restart, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
   end
-  
+
   desc "Create some symlinks from shared to public"
   task :create_symlinks do
     #run "cd #{current_path}/public; ln -s #{deploy_to}/shared/dir dir"
   end
-  
+
 end
 
 namespace :bundle do
@@ -63,7 +63,7 @@ namespace :bundle do
   task :install do
     run "cd #{current_path}; bundle install --relock"
   end
-  
+
   desc "Commit, deploy and install"
   task :installscom do
     `svn commit -m ''`
@@ -80,16 +80,16 @@ namespace :bundler do
     release_dir = File.join(current_release, '.bundle')
     run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
   end
-  
+
   task :bundle_new_release, :roles => :app do
     bundler.create_symlink
     run "cd #{release_path} && bundle install --without test"
   end
-  
+
   task :lock, :roles => :app do
     run "cd #{current_release} && bundle lock;"
   end
-  
+
   task :unlock, :roles => :app do
     run "cd #{current_release} && bundle unlock;"
   end
@@ -116,27 +116,27 @@ namespace :db do
   task :create do
     run "mysql -u root --password=#{password} -e 'CREATE DATABASE IF NOT EXISTS #{application}_production;'"
   end
-  
+
   desc "Seed database"
   task :seeds do
     run "cd #{current_path}; #{R_ENV}=production rake db:seeds"
   end
-  
+
   desc "Migrate database"
   task :automigrate do
     run "cd #{current_path}; #{R_ENV}=production rake db:automigrate --trace"
   end
-  
+
   desc "Send the local db to production server"
   task :toprod do
     # `rake db:seeds`
     run "mkdir -p #{current_path}/db"
     `mysqldump -u root #{application}_development > db/#{application}_development.sql`
-    
+
     upload "db/#{application}_development.sql", "#{current_path}/db/#{application}_development.sql", :via => :scp
     run "mysql -u root --password=#{password} #{application}_production < #{current_path}/db/#{application}_development.sql"
   end
-  
+
   desc "Get the remote copy of production db"
   task :todev do
     run "mkdir -p #{current_path}/db; mysqldump -u root --password=#{password} #{application}_production > #{current_path}/db/#{application}_production.sql"
