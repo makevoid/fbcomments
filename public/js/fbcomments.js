@@ -46,8 +46,8 @@
     helpers = {};
 
     helpers.format_date = function(date) {
-      date = Date.parse(date.substring(0, 19));
-      return date;
+      date = new Date(date);
+      return "" + (date.getDate()) + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear());
     };
 
     FbComments.prototype.comment_html = function(c) {

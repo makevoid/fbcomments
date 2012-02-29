@@ -44,6 +44,14 @@ after :deploy, "deploy:cleanup"
 #after :deploy, "deploy:create_symlinks"
 #after :deploy, "db:seeds"
 
+
+namespace :sync do
+  desc "Starts sync"
+  task :start do
+    run "cd /www/fbcomments/current/; RACK_ENV=production bundle exec ruby lib/sync.rb start"
+  end
+end
+
 namespace :deploy do
 
   desc "Restart Application"
