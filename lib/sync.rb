@@ -44,7 +44,7 @@ class Sync
     posts.each do |post|
       url = get_post_url(@blog, post)
       exists = @blog.posts.first url: url
-      @blog.posts.create( id_wp: post[:id], url: url ) unless exists
+      @blog.posts.create( id_wp: post[:id], url: url, name: post[:post_title] ) unless exists
     end
   end
 

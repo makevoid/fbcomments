@@ -41,11 +41,13 @@ class FbComments
   
   
   comment_html: (c) ->
+    general_blog = "(sul blog generale:) #{c.post.blog.label}" # FIXME: implement me
+    general_blog = "" 
     "
     <div class='fbc_comment'>
       <fb:profile-pic uid='#{c.user_id}' linked='true'></fb:profile-pic>
       <div class='fbc_from'>
-          <fb:name uid='#{c.user_id}' linked='true'></fb:name> commented on <a href='#{c.post.url}'>#{c.post.name}</a> (sul blog generale:) #{c.post.blog.label} <span class='fbc_date'>#{helpers.format_date c.created_at}</span>
+          <fb:name uid='#{c.user_id}' linked='true'></fb:name> commented on <a href='#{c.post.url}'>#{c.post.name}</a> #{general_blog} <span class='fbc_date'>#{helpers.format_date c.created_at}</span>
       </div>
       <div class='fbc_message'>#{c.text}</div>
       </div>
