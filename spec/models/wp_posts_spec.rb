@@ -8,12 +8,12 @@ require "spec_helper"
 # DataMapper.auto_migrate!
 
 describe WPPosts do
-  
+
   before :all do
     blogs = [
       {
         name: "wp",
-        host: "127.0.0.1", 
+        host: "127.0.0.1",
         user: "root",
         password: "",
         database: "wp_blog",
@@ -26,19 +26,19 @@ describe WPPosts do
       comment = post.comments.create text: "commment", user_id: 1218562195
       comment = post.comments.create text: "commment 2", user_id: 1218562195
     end
-    
+
   end
-  
+
   it "should fetch the posts" do
     wpp = WPPosts.new
-    wpp.fetch.should include(id: 1, guid: "http://wp/?p=1")
+    wpp.fetch.should include(id: 1, guid: "http://wp/?p=1", post_name: "hello-world")
     # p MYSQL_FIXTURE
   end
-  
+
   after :all do
     clear_db if defined?(clear_db)
   end
-  
+
 end
 
 # TODO:

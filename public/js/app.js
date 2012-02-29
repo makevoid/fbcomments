@@ -7,8 +7,6 @@
 
   config.fbcomments_host = location.host;
 
-  config.fbcomments_host = "web2srv3";
-
   config.fbcomments_host = "http://" + config.fbcomments_host;
 
   blog_name = "wp";
