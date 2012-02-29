@@ -13,7 +13,7 @@
     FbComments.prototype.latest = function(callback) {
       var _this = this;
       if ($(".fb_comments").length !== 0) {
-        return $.getJSON("" + fbcomments_host + "/blogs/" + this.blog + "/comments", function(comments) {
+        return $.getJSON("" + config.fbcomments_host + "/blogs/" + this.blog + "/comments", function(comments) {
           var comment, _i, _len;
           if (comments.length !== 0) {
             for (_i = 0, _len = comments.length; _i < _len; _i++) {

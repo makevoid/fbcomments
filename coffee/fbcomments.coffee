@@ -9,7 +9,7 @@ class FbComments
 
   latest: (callback) ->  
     if $(".fb_comments").length != 0
-      $.getJSON "#{fbcomments_host}/blogs/#{@blog}/comments", (comments) =>
+      $.getJSON "#{config.fbcomments_host}/blogs/#{@blog}/comments", (comments) =>
         unless comments.length == 0
           for comment in comments
             comment = this.comment_html comment
