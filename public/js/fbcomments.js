@@ -47,9 +47,7 @@
 
     helpers.format_date = function(date) {
       date = Date.parse(date.substring(0, 19));
-      if (date) {
-        return "" + (date.getDate()) + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear());
-      }
+      return date;
     };
 
     FbComments.prototype.comment_html = function(c) {
