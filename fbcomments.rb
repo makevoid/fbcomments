@@ -75,7 +75,7 @@ class FBComments < Sinatra::Base
   end
 
   get "/blogs/:name/comments" do |url|
-    content_type :json
+
     blog = Blog.first name: params[:name]
     if blog
       Comment.all(post: blog.posts).map{ |c| c.public_attributes }.to_json
