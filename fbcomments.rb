@@ -4,6 +4,8 @@ APP_PATH = path
 require 'bundler/setup'
 Bundler.require :default
 
+# configs:
+ROOT_URL = "web2srv3"
 
 class FBComments < Sinatra::Base
   require "#{APP_PATH}/config/env"
