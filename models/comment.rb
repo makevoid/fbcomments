@@ -32,7 +32,7 @@ class Comment
     attributes.merge(
       post: {
         name: post.name,
-        url: post.name,
+        url: post.url,
         comments_count: post.comments_count,
         blog: {
           id: blog.id,
