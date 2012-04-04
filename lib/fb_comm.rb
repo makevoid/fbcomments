@@ -33,6 +33,7 @@ class FBComm
 
   def insert_comment_if_new(comment, post_url)
     comm = Comment.first(fb_id: comment[:id])
+    puts "-"*80
     unless comm
       post = @blog.posts.first(url: post_url)
       unless post
