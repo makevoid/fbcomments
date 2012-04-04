@@ -9,7 +9,6 @@ class WPPosts
   end
 
   def fetch_wp(configs)
-    # p configs
     db = Sequel.mysql configs
     db[:wp_posts].where(post_status: "publish", post_parent: 0).select(:id, :guid, :post_name, :post_title).all
   end

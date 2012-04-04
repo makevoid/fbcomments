@@ -51,7 +51,7 @@ class FBComments < Sinatra::Base
       "*"
     end
     # origin_hosts = "http://globalgovernancenetwork.eui.eu"
-    headers "Access-Control-Allow-Origin" =>  origin_hosts
+    headers "Access-Control-Allow-Origin" => "*"# origin_hosts
     headers "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE, OPTIONS"
     headers "Access-Control-Allow-Credentials" => "true"
   end
