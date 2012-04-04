@@ -9,6 +9,9 @@ class FBComm
     datas = get_full
     puts "Datas:"
     p datas
+    # https://graph.facebook.com/comments/?ids=http://blogs.eui.eu/francescomartino/free-social-icons.html,http://blogs.eui.eu/francescomartino/zoo-extension.html
+    raise "Facebook returned an error:\n\n#{datas}\n" if datas["error"]
+
     datas.map do |post, comments|
       # puts post
       comments = comments["comments"]
@@ -27,7 +30,12 @@ class FBComm
   private
 
   def base_url
-    URL % posts_urls
+    sanitize(URL % posts_urls)
+  end
+
+  def sanitize(url)
+    # TODO: finish here
+    url
   end
 
   def posts_urls
