@@ -50,6 +50,11 @@ namespace :sync do
   task :start do
     run "cd /www/fbcomments/current/; RACK_ENV=production bundle exec ruby lib/sync.rb start"
   end
+
+  desc "Cleans db, you have to sync again"
+  task :clean do
+    run "mysql -u root --password=#{password} fbcomments_production -e 'DELETE FROM posts; DELETE FROM comments'"
+  end
 end
 
 namespace :deploy do
