@@ -10,11 +10,13 @@ class FBComm
     datas.map do |post, comments|
       # puts post
       comments = comments["data"]
+      puts "-"*80
+      p comments
       comments.map do |comment|
         comment = comment.symbolize_keys
         comment[:created_time] = Time.parse comment[:created_time]
         insert_comment_if_new comment, post
-      end
+      end if comments
     end
   end
 

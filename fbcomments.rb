@@ -79,8 +79,6 @@ class FBComments < Sinatra::Base
     end
   end
 
-  # get "/blogs/:name/comments" do |url|
-  # get "/blogs/:name/comments" do |url|
   get %r{/blogs/(.+?)/comments} do |url|
     # content_type :json
     blog = Blog.first name: url# params[:name]

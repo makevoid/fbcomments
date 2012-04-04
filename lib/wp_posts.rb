@@ -4,10 +4,7 @@ class WPPosts
 
   def fetch
     Blog.all.map do |blog|
-      posts = fetch_wp blog.mysql_attributes
-      puts "POSTS >>>>>>>>>>"
-      p posts
-      posts
+      fetch_wp blog.mysql_attributes
     end.flatten
   end
 
