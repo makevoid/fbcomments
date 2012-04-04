@@ -15,7 +15,7 @@ class FBComm
       comments.map do |comment|
         comment = comment.symbolize_keys
         comment[:created_time] = Time.parse comment[:created_time]
-        p comment
+        puts "comment: #{comment}"
         insert_comment_if_new comment, post
       end if comments
     end
@@ -33,7 +33,6 @@ class FBComm
 
   def insert_comment_if_new(comment, post_url)
     comm = Comment.first(fb_id: comment[:id])
-    puts "-"*80
     unless comm
       post = @blog.posts.first(url: post_url)
       unless post
