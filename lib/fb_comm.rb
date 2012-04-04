@@ -47,7 +47,7 @@ class FBComm
 
   def get_full
     resp = get(base_url)
-    p resp
+    p resp.body
     JSON.parse resp.body
   end
 
