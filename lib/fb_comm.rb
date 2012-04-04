@@ -11,6 +11,7 @@ class FBComm
     p datas
     datas.map do |post, comments|
       # puts post
+      comments = comments["comments"]
       comments = comments["data"]
       puts "Comments:"
       p comments
