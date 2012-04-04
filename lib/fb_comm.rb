@@ -10,8 +10,10 @@ class FBComm
     datas.map do |post, comments|
       # puts post
       comments = comments["data"]
+
       puts "-"*80
       p comments
+
       comments.map do |comment|
         comment = comment.symbolize_keys
         comment[:created_time] = Time.parse comment[:created_time]
@@ -48,8 +50,8 @@ class FBComm
   end
 
   def get_full
+    puts "url: #{base_url}"
     resp = get(base_url)
-    p resp.body
     JSON.parse resp.body
   end
 
