@@ -2,10 +2,12 @@ require 'sequel'
 
 class WPPosts
 
+  def initialize(blog)
+    @blog = blog
+  end
+
   def fetch
-    Blog.all.map do |blog|
-      fetch_wp blog.mysql_attributes
-    end.flatten
+    fetch_wp @blog.mysql_attributes
   end
 
   def fetch_wp(configs)

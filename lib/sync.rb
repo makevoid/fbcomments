@@ -38,7 +38,7 @@ class Sync
   private
 
   def create_posts
-    wpp = WPPosts.new
+    wpp = WPPosts.new(@blog)
     posts = wpp.fetch
 
     posts.each do |post|
