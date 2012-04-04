@@ -39,12 +39,14 @@ class FBComm
         post = @blog.posts.create( url: post_url )
       end
 
-      post.comments.create(
+      com = {
         text: comment[:message],
         user_id: comment[:from]["id"],
         fb_id: comment[:id],
         created_at: comment[:created_time],
-      )
+      }
+      puts "Com: #{com}"
+      post.comments.create(com)
     end
   end
 
