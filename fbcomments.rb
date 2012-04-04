@@ -69,7 +69,7 @@ class FBComments < Sinatra::Base
   # encodeURIComponent("http://localhost:3001/post1)
   # http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpost1
   # get "/posts/:post_id/comments" do |post_id|
-  get %r{/posts/(.+)/comments} do |post_id|
+  get %r{/posts/(.+?)/comments} do |post_id|
     # content_type :json
     url = CGI.unescape post_id
     if post = Post.first( url: url )
@@ -81,7 +81,7 @@ class FBComments < Sinatra::Base
 
   # get "/blogs/:name/comments" do |url|
 
-  get %r{/blogs/(.+)/comments} do |url|
+  get %r{/blogs/(.+?)/comments} do |url|
     # content_type :json
     blog = Blog.first name: params[:name]
     if blog
