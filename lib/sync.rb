@@ -59,7 +59,7 @@ if ARGV[0] && ARGV[0].strip == "start"
 end
 
 if ARGV[0] && ARGV[0].strip == "reset"
-  DataMapper.repository(:default).execute('TRUNCATE TABLE posts, comments')
+  DataMapper.repository(:default).adapter.execute('TRUNCATE TABLE posts, comments')
   Sync.start
 end
 
