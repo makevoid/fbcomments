@@ -45,9 +45,13 @@ class FBComments < Sinatra::Base
       when "test"         then "127.0.0.1 www.example.com"
       when "production"   then referer
     end
-    # origin_hosts = request.referer.sub /\/$/, '' if referer
-    origin_hosts = "http://globalgovernancenetwork.eui.eu"
-    headers "Access-Control-Allow-Origin" =>  origin_hosts
+    origin_hosts = if request.referer
+      request.referer.sub /\/$/, ''
+    else
+      "*"
+    end
+    # origin_hosts = "http://globalgovernancenetwork.eui.eu"
+    headers "Access-Control-Allow-Origin" => "*"# origin_hosts
     headers "Access-Control-Allow-Methods" => "GET, POST, PUT, DELETE, OPTIONS"
     headers "Access-Control-Allow-Credentials" => "true"
   end
@@ -65,6 +69,7 @@ class FBComments < Sinatra::Base
   # encodeURIComponent("http://localhost:3001/post1)
   # http://localhost:3000/comments/http%3A%2F%2Flocalhost%3A3001%2Fpost1
   get "/posts/:post_id/comments" do |post_id|
+  # get %r{/posts/(.+?)/comments} do |post_id|
     # content_type :json
     url = CGI.unescape post_id
     if post = Post.first( url: url )
@@ -74,9 +79,9 @@ class FBComments < Sinatra::Base
     end
   end
 
-  get "/blogs/:name/comments" do |url|
+  get %r{/blogs/(.+?)/comments} do |url|
     # content_type :json
-    blog = Blog.first name: params[:name]
+    blog = Blog.first name: url# params[:name]
     if blog
       Comment.all(post: blog.posts).map{ |c| c.public_attributes }.to_json
     else

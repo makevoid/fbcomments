@@ -1,5 +1,5 @@
 class FBComm
-  URL = "https://graph.facebook.com/comments/?ids=%s"
+  URL = "https://graph.facebook.com/comments/?ids=%s&limit=1000000"
 
   def initialize(blog)
     @blog = blog
@@ -7,21 +7,35 @@ class FBComm
 
   def fetch
     datas = get_full
+    puts "Datas:"
+    p datas
+    # https://graph.facebook.com/comments/?ids=http://blogs.eui.eu/francescomartino/free-social-icons.html,http://blogs.eui.eu/francescomartino/zoo-extension.html
+    raise "Facebook returned an error:\n\n#{datas}\n" if datas["error"]
+
     datas.map do |post, comments|
       # puts post
+      comments = comments["comments"]
       comments = comments["data"]
+      puts "Comments:"
+      p comments
       comments.map do |comment|
         comment = comment.symbolize_keys
         comment[:created_time] = Time.parse comment[:created_time]
+        puts "comment: #{comment}"
         insert_comment_if_new comment, post
-      end
+      end if comments
     end
   end
 
   private
 
   def base_url
-    URL % posts_urls
+    sanitize(URL % posts_urls)
+  end
+
+  def sanitize(url)
+    # TODO: finish here
+    url
   end
 
   def posts_urls
@@ -36,16 +50,19 @@ class FBComm
         post = @blog.posts.create( url: post_url )
       end
 
-      post.comments.create(
+      com = {
         text: comment[:message],
         user_id: comment[:from]["id"],
         fb_id: comment[:id],
         created_at: comment[:created_time],
-      )
+      }
+      puts "Com: #{com}"
+      post.comments.create(com)
     end
   end
 
   def get_full
+    puts "url: #{base_url}"
     resp = get(base_url)
     JSON.parse resp.body
   end

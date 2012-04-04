@@ -38,7 +38,7 @@ class Sync
   private
 
   def create_posts
-    wpp = WPPosts.new
+    wpp = WPPosts.new(@blog)
     posts = wpp.fetch
 
     posts.each do |post|
@@ -57,3 +57,10 @@ end
 if ARGV[0] && ARGV[0].strip == "start"
   Sync.start
 end
+
+if ARGV[0] && ARGV[0].strip == "reset"
+  DataMapper.repository(:default).adapter.execute('TRUNCATE TABLE comments')
+  DataMapper.repository(:default).adapter.execute('TRUNCATE TABLE posts')
+  Sync.start
+end
+

@@ -6,7 +6,7 @@ set :domain,      "web2srv3"
 
 # #set :repository,  "svn://#{domain}/svn/#{application}"
 # #default_run_options[:pty] = true  # Must be set for the password prompt from git to work
-set :repository, "git://github.com/makevoid/#{application}.git"  # public
+set :repository, "https://makevoid@github.com/makevoid/#{application}.git"  # public
 # set :repository, "ssh+git://git@makevoid.com/git/#{application}"  # private @makevoid.com
 
 set :scm, "git"
