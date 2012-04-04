@@ -1,5 +1,5 @@
 class FBComm
-  URL = "https://graph.facebook.com/comments/?ids=%s"
+  URL = "https://graph.facebook.com/comments/?ids=%s&limit=1000000"
 
   def initialize(blog)
     @blog = blog
