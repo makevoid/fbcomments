@@ -26,6 +26,7 @@ class Comment
     self.post.save
   end
 
+  default_scope(:default).update({ :order => :created_at.desc })
 
   def public_attributes
     blog = post.blog
