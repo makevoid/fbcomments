@@ -7,22 +7,19 @@ class FBComm
 
   def fetch
     datas = get_full
-    puts "Datas:"
-    p datas
-    # https://graph.facebook.com/comments/?ids=http://blogs.eui.eu/francescomartino/free-social-icons.html,http://blogs.eui.eu/francescomartino/zoo-extension.html
+    # puts "Datas:"
+    # p datas
     raise "Facebook returned an error:\n\n#{datas}\n" if datas["error"]
 
     datas.map do |post, comments|
       # puts post
-      puts "comments: #{comments.inspect}"
+      # puts "comments: #{comments.inspect}"
       comments = comments["comments"]
       comments = comments["data"]
-      puts "Comments:"
-      p comments
       comments.map do |comment|
         comment = comment.symbolize_keys
         comment[:created_time] = Time.parse comment[:created_time]
-        puts "comment: #{comment}"
+        # puts "comment: #{comment}"
         insert_comment_if_new comment, post
       end if comments
     end
@@ -31,12 +28,7 @@ class FBComm
   private
 
   def base_url
-    sanitize(URL % posts_urls)
-  end
-
-  def sanitize(url)
-    # TODO: finish here
-    url
+    URL % posts_urls
   end
 
   def posts_urls
@@ -57,13 +49,12 @@ class FBComm
         fb_id: comment[:id],
         created_at: comment[:created_time],
       }
-      puts "Com: #{com}"
       post.comments.create(com)
     end
   end
 
   def get_full
-    puts "url: #{base_url}"
+    # puts "url: #{base_url}"
     resp = get(base_url)
     JSON.parse resp.body
   end
