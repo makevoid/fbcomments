@@ -14,6 +14,7 @@ class FBComm
 
     datas.map do |post, comments|
       # puts post
+      puts "comments: #{comments.inspect}"
       comments = comments["comments"]
       comments = comments["data"]
       puts "Comments:"

@@ -31,7 +31,7 @@ describe WPPosts do
 
   it "should fetch the posts" do
     wpp = WPPosts.new Blog.first
-    wpp.fetch.should include(id: 1, guid: "http://wp/?p=1", post_name: "hello-world")
+    wpp.fetch.should include(id: 1, guid: "http://wp/?p=1", post_name: "hello-world", post_title: "Hello world!")
     # p MYSQL_FIXTURE
   end
 

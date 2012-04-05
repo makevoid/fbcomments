@@ -48,7 +48,7 @@ feature "FBComments", js: true do
       end
 
       it "displays all comments field" do
-        page.find(".fb_comments").should have_content(@blog[:label])
+        page.find(".fb_comments").should have_content("commented on post1 5/4/2012 comment1")
         page.find(".fb_comments").should have_content("#{@time.day}/#{@time.month}/#{@time.year}")
       end
     end
