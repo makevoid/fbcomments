@@ -8,6 +8,8 @@ class FBComm
   def fetch
     datas = get_full
     # puts "Datas:"
+    p posts_urls
+    p base_url
     p datas
     raise "Facebook returned an error:\n\n#{datas}\n" if datas["error"]
 
