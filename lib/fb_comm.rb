@@ -14,8 +14,8 @@ class FBComm
       resp = get(url)
       datas = JSON.parse resp.body
 
-      raise "Facebook returned an error:\n\n#{datas}\n" if datas && datas["error"]
       p datas
+      raise "Facebook returned an error:\n\n#{datas}\n" if datas && datas["error"]
 
       datas.map do |post, comments|
         # puts post
