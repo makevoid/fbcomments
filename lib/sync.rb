@@ -44,7 +44,11 @@ class Sync
     posts.each do |post|
       url = get_post_url(@blog, post)
       exists = @blog.posts.first url: url
-      @blog.posts.create( id_wp: post[:id], url: url, name: post[:post_title] ) unless exists
+      begin
+        @blog.posts.create( id_wp: post[:id], url: url, name: post[:post_title] ) unless exists
+      rescue DataObjects::SQLError => e
+        puts "sql error: #{e.inspect}"
+      end
     end
   end
 

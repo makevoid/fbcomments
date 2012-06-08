@@ -8,7 +8,7 @@ class FBComm
   def fetch
     datas = get_full
     # puts "Datas:"
-    # p datas
+    p datas
     raise "Facebook returned an error:\n\n#{datas}\n" if datas["error"]
 
     datas.map do |post, comments|
