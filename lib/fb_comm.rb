@@ -6,24 +6,29 @@ class FBComm
   end
 
   def fetch
-    datas = get_full
+    # datas = get_full
     # puts "Datas:"
-    p posts_urls
-    p base_url
-    p datas
-    raise "Facebook returned an error:\n\n#{datas}\n" if datas["error"]
 
-    datas.map do |post, comments|
-      # puts post
-      # puts "comments: #{comments.inspect}"
-      comments = comments["comments"]
-      comments = comments["data"]
-      comments.map do |comment|
-        comment = comment.symbolize_keys
-        comment[:created_time] = Time.parse comment[:created_time]
-        # puts "comment: #{comment}"
-        insert_comment_if_new comment, post
-      end if comments
+    @blog.posts.map do |post|
+      url = URL % post.url
+      resp = get(url)
+      datas = JSON.parse resp.body
+
+      raise "Facebook returned an error:\n\n#{datas}\n" if datas["error"]
+      p datas
+
+      datas.map do |post, comments|
+        # puts post
+        # puts "comments: #{comments.inspect}"
+        comments = comments["comments"]
+        comments = comments["data"]
+        comments.map do |comment|
+          comment = comment.symbolize_keys
+          comment[:created_time] = Time.parse comment[:created_time]
+          # puts "comment: #{comment}"
+          insert_comment_if_new comment, post
+        end if comments
+      end
     end
   end
 
