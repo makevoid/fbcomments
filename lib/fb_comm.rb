@@ -14,6 +14,8 @@ class FBComm
       resp = get(url)
       datas = JSON.parse resp.body
 
+
+      next if datas == [{"data"=>[]}]
       p datas
       # raise "Facebook returned an error:\n\n#{datas}\n" if datas && datas["error"]
 
