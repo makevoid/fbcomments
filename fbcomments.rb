@@ -84,7 +84,7 @@ class FBComments < Sinatra::Base
     # content_type :json
     blog = Blog.first name: url# params[:name]
     if blog
-      Comment.all(post: blog.posts).map{ |c| c.public_attributes }.to_json
+      Comment.all(post: blog.posts, limit: 10).map{ |c| c.public_attributes }.to_json
     else
       [].to_json
     end
