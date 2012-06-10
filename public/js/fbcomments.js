@@ -40,7 +40,9 @@
         default:
           console.error("Don't know how to render type: " + type + ". Implement it in fbcomments.coffee");
       }
-      if (this.callback) return this.callback();
+      if (this.callback) {
+        return this.callback();
+      }
     };
 
     helpers = {};
@@ -54,7 +56,7 @@
       var general_blog;
       general_blog = "(sul blog generale:) " + c.post.blog.label;
       general_blog = "";
-      return "    <div class='fbc_comment'>      <fb:profile-pic uid='" + c.user_id + "' linked='true'></fb:profile-pic>      <div class='fbc_from'>          <fb:name uid='" + c.user_id + "' linked='true'></fb:name> commented on <a href='" + c.post.url + "'>" + c.post.name + "</a> " + general_blog + " <span class='fbc_date'>" + (helpers.format_date(c.created_at)) + "</span>      </div>      <div class='fbc_message'>" + c.text + "</div>      </div>    </div>";
+      return "    <div class='fbc_comment'>      <div class='fbc_pic'><fb:profile-pic uid='" + c.user_id + "' linked='true'></fb:profile-pic></div>      <div class='fbc_from'>          <fb:name uid='" + c.user_id + "' linked='true'></fb:name> commented on <a href='" + c.post.url + "'>" + c.post.name + "</a> " + general_blog + " <span class='fbc_date'>" + (helpers.format_date(c.created_at)) + "</span>      </div>      <div class='fbc_message'>" + c.text + "</div>      </div>    </div>";
     };
 
     FbComments.prototype.comment_html_fb = function(comment) {
