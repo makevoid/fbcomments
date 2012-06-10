@@ -16,12 +16,12 @@ require_relative "fb_comm"
 class Sync
 
   CUSTOM_PERMALINK = Proc.new do |blog, post|
-    "http://#{blog.name}/#{post[:post_name]}.html" # /%postname%.html
+    "http://#{blog.name}/#{post[:post_name]}/" # /%postname%/ # /%postname%.html
   end
   # CUSTOM_PERMALINK = nil # to use default permalink
 
   def self.start
-    Blog.all.each do |blog|
+    Blog.all[2..2].each do |blog|
       new(blog).start
     end
   end

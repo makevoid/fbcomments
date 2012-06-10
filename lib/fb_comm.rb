@@ -6,14 +6,11 @@ class FBComm
   end
 
   def fetch
-    # datas = get_full
-    # puts "Datas:"
-
     @blog.posts.map do |post|
+      puts "post: #{post.id} - #{post.url}"
       url = URL % post.url
       resp = get(url)
       datas = JSON.parse resp.body
-
 
       next if datas == [{"data"=>[]}]
       p datas
