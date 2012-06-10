@@ -21,7 +21,7 @@ class Sync
   # CUSTOM_PERMALINK = nil # to use default permalink
 
   def self.start
-    Blog.all[2..2].each do |blog|
+    Blog.all.each do |blog|
       new(blog).start
     end
   end
