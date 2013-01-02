@@ -1,5 +1,7 @@
 # FBCommments
 
+### get Facebook comments counts from Wordpress posts
+
 - configure fbcomments
 
    TODO: spec and document the process
